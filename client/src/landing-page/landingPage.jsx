@@ -1,4 +1,5 @@
-import "./landingPage.css"
+import "./LandingPage.css"
+import {Link} from "react-router-dom"
 
 export default function LandingPage() {
     return (
@@ -6,9 +7,9 @@ export default function LandingPage() {
             <div className={"menu"}>
                 <h1>MONCRA</h1>
                 <div className={"options"}>
-                    <button className={"join-btn"}>JOIN LOBBY</button>
-                    <button className={"create-btn"}>CREATE LOBBY</button>
-                    <button className={"cards-btn"}>INVENTORY</button>
+                    <Link to={"/join"}><button className={"join-btn"}>Join Lobby</button></Link>
+                    <button className={"create-btn"}>Create Lobby</button>
+                    <button className={"cards-btn"}>Cards</button>
                 </div>
             </div>
         </div>
