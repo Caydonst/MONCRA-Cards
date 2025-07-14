@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import socket from "../socket.js";
 import "./Lobby.css"; // For circle styling
+import { useParams } from "react-router-dom";
 
 export default function Lobby() {
+    const { lobbyId } = useParams();
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        // Join lobby "lobby1" on load
-        socket.emit("join-lobby", "lobby1");
+        socket.emit("lobby-update", (lobbyId));
 
-        // Listen for updates
-        socket.on("lobby-update", (playerIds) => {
-            setPlayers(playerIds);
+        socket.on("update", (lobby) => {
+            setPlayers(lobby.players);
+            console.log(lobby.players)
         });
 
         return () => {
@@ -21,7 +22,7 @@ export default function Lobby() {
 
     return (
         <div className="lobby-container">
-            <h1>Lobby</h1>
+            <h1>Lobby ID: {lobbyId}</h1>
             <div className="players">
                 {players.map((id) => (
                     <div className="player-circle" key={id} title={id}></div>

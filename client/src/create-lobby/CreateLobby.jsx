@@ -3,12 +3,16 @@ import {Link} from "react-router-dom";
 import {useState, useEffect, useRef} from "react";
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import {ArrowLeftIcon} from "@heroicons/react/24/outline/index.js";
+import socket from "../socket.js";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateLobby() {
     const [numPlayers, setNumPlayers] = useState(2);
     const [publicity, setPublicity] = useState("Public");
     const [playerOpen, setPlayerOpen] = useState(false);
     const [publicityOpen, setPublicityOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const publicityRef = useRef(null);
     const playerRef = useRef(null);
@@ -23,7 +27,7 @@ export default function CreateLobby() {
     };
 
     const setPlayers = (num) => {
-        //setNumPlayers(num);
+        setNumPlayers(num);
         togglePlayerDropdown();
     }
 
@@ -32,7 +36,7 @@ export default function CreateLobby() {
         togglePublicityDropdown();
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         const handleMouseUp = (event) => {
             if (
                 publicityOpen &&
@@ -66,7 +70,24 @@ export default function CreateLobby() {
         return () => {
             document.removeEventListener("mouseup", handleMouseUp);
         };
-    }, [playerOpen]);*/
+    }, [playerOpen]);
+
+    const createNewLobby = () => {
+        const lobbyId = "lobby1"; // or generate dynamically
+        const lobbyCode = "J4NH2K"; // or generate randomly
+        socket.emit(
+            "create-lobby",
+            numPlayers,
+            publicity,
+            (response) => {
+                if (response.success) {
+                    navigate(`/lobby/${lobbyId}`);
+                } else {
+                    alert(`Error creating lobby: ${response.error}`);
+                }
+            }
+        );
+    };
 
 
     return (
@@ -88,7 +109,7 @@ export default function CreateLobby() {
                         <button onClick={() => setPublicityFunc("Private")}>Private</button>
                     </div>
                 </div>
-                <button className={"create-lobby-btn"}>Create Lobby</button>
+                <button className={"create-lobby-btn"} onClick={createNewLobby}>Create Lobby</button>
             </div>
             <Link to={"/"}><button className={"back-btn"}><ArrowLeftIcon className={"arrow-left"}/></button></Link>
         </div>

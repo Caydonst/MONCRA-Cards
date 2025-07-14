@@ -13,6 +13,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/join" element={<JoinLobby />} />
                 <Route path="/create" element={<CreateLobby />} />
+                <Route path="/lobby/:lobbyId" element={<Lobby />} />
             </Routes>
         </BrowserRouter>
     )

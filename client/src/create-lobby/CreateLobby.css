@@ -31,30 +31,93 @@
     flex-direction: column;
     color: #fff;
     cursor: pointer;
-    transition: 0.2s;
-}
-.lobby-info .player-select:hover,
-.lobby-info .publicity-select:hover {
-    background: #202020;
+    transition: 0.3s;
+    overflow: hidden;
 }
 .player-select-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    width: 100%;
+    font-size: 16px;
+    transition: 0.2s;
+}
+.player-select-header:hover {
+    background: #202020;
 }
 .player-selector-dropdown {
     width: 100%;
     display: flex;
     justify-content: start;
     align-items: start;
+    flex-direction: column;
     max-height: 0;
     overflow: hidden;
     will-change: max-height;
-    transition: 0.3s;
+    transition: 0.5s;
 }
 .player-selector-dropdown.open {
     max-height: 1000px;
+}
+.player-selector-dropdown button {
+    width: 100%;
+    padding: 20px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 16px;
+    transition: 0.2s;
+}
+.player-selector-dropdown button:hover {
+    background: #202020;
+}
+/* ========================================================= */
+.publicity-select-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    font-size: 16px;
+    transition: 0.2s;
+}
+.publicity-select-header:hover {
+    background: #202020;
+}
+.publicity-selector-dropdown {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    will-change: max-height;
+    transition: 0.5s;
+}
+.publicity-selector-dropdown.open {
+    max-height: 1000px;
+}
+.publicity-selector-dropdown button {
+    width: 100%;
+    padding: 20px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 16px;
+    transition: 0.2s;
+}
+.publicity-selector-dropdown button:hover {
+    background: #202020;
 }
 .lobby-info .down-arrow {
     width: 20px;
