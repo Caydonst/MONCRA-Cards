@@ -1,21 +1,66 @@
 .lobby-container {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
     padding-top: 2rem;
+    background: #141414;
+    height: 100vh;
 }
-
+.lobby-header {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.lobby-header h1 {
+    font-size: 50px;
+    color: #fff;
+}
+.lobby-header h2 {
+    color: #fff;
+}
 .players {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 30px;
 }
-
-.player-circle {
-    width: 60px;
-    height: 60px;
-    background-color: #4ade80; /* green */
+.player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+.player-profile-pic {
+    width: 200px;
+    height: 200px;
+    background-color: #00a6ff; /* green */
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 16px rgba(0, 166, 255, 0.5);
+}
+.player-username {
+    color: #fff;
+    font-size: 16px;
+}
+.start-game-btn {
+    position: absolute;
+    bottom: 50px;
+    width: 600px;
+    height: 60px;
+    color: #fff;
+    border: none;
+    background: #00a6ff;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.start-game-btn:hover {
+    background: #0088d1;
 }

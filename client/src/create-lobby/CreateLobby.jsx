@@ -5,6 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import {ArrowLeftIcon} from "@heroicons/react/24/outline/index.js";
 import socket from "../socket.js";
 import { useNavigate } from "react-router-dom";
+import { useLobbyAccess } from "../context/LobbyAccessContext";
 
 export default function CreateLobby() {
     const [numPlayers, setNumPlayers] = useState(2);
@@ -16,7 +17,8 @@ export default function CreateLobby() {
 
     const publicityRef = useRef(null);
     const playerRef = useRef(null);
-    console.log(publicityOpen)
+
+    const { setJoinedLobbyId } = useLobbyAccess();
 
     const togglePlayerDropdown = () => {
         setPlayerOpen((prev) => !prev);
@@ -73,15 +75,14 @@ export default function CreateLobby() {
     }, [playerOpen]);
 
     const createNewLobby = () => {
-        const lobbyId = "lobby1"; // or generate dynamically
-        const lobbyCode = "J4NH2K"; // or generate randomly
         socket.emit(
             "create-lobby",
             numPlayers,
             publicity,
             (response) => {
                 if (response.success) {
-                    navigate(`/lobby/${lobbyId}`);
+                    setJoinedLobbyId(response.lobbyId);
+                    navigate(`/lobby/${response.lobbyId}`);
                 } else {
                     alert(`Error creating lobby: ${response.error}`);
                 }

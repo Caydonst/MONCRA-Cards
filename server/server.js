@@ -26,31 +26,41 @@ io.on("connection", (socket) => {
     console.log(`User connected: ${socket.id}`);
 
     socket.on("join-lobby", (code, callback) => {
-        for (const lobby in lobbies) {
+        let found = false;
+
+        for (const lobbyId in lobbies) {
+            const lobby = lobbies[lobbyId];
             if (lobby.lobbyCode === code) {
-                socket.join(lobbyId);
+                socket.join(lobby.lobbyId);
                 if (!lobby.players.includes(socket.id)) {
                     lobby.players.push(socket.id);
                 }
-                callback({ success: true });
-            } else {
-                callback({ success: false, error: "Incorrect code" });
+                callback({ success: true, lobbyId: lobby.lobbyId });
+                io.to(lobbyId).emit("lobby-update", lobby);
+                console.log(`${socket.id} joined the lobby`);
+                found = true;
+                break;
             }
         }
 
-        io.to(lobbyId).emit("lobby-update", lobbies[lobbyId].players);
+        if (!found) {
+            callback({ success: false, error: "Incorrect code" });
+        }
+
         console.log(lobbies);
     });
 
+
     socket.on("create-lobby", (numPlayers, publicity, callback) => {
         const code = createCode();
-        const id = `lobby1`
+        const id = `Lobby${Object.keys(lobbies).length + 1}`;
 
         if (!lobbies[id]) {
             socket.join(id);
 
             lobbies[id] = {
                 lobbyId: id,
+                lobbyOwner: socket.id,
                 lobbyCode: code,
                 numPlayers: parseInt(numPlayers),
                 publicity: publicity,
@@ -59,19 +69,25 @@ io.on("connection", (socket) => {
 
             const lobby = lobbies[id];
 
-            console.log(`Lobby created: ${id}`);
+            console.log(lobbies);
+            console.log(`Lobby created: ${lobby.lobbyId} code: ${lobby.lobbyCode}`);
             io.to(id).emit("lobby-update", lobby);
-            callback({ success: true });
+            callback({ success: true, lobbyId: lobby.lobbyId });
         } else {
             console.log(`Lobby already exists: ${id}`);
             callback({ success: false, error: "Lobby already exists" });
         }
     });
 
-    socket.on("lobby-update", (lobbyId) => {
-       const lobby = lobbies[lobbyId];
-        io.to(lobbyId).emit("update", lobby);
+    socket.on("get-lobby", (lobbyId, callback) => {
+        const lobby = lobbies[lobbyId];
+        if (lobby) {
+            callback({ success: true, lobby });
+        } else {
+            callback({ success: false, error: "Lobby not found" });
+        }
     });
+
 
     socket.on("disconnect", () => {
         for (const lobbyId in lobbies) {
