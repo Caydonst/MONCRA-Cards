@@ -3,6 +3,7 @@ import LandingPage from './landing-page/LandingPage.jsx';
 import Lobby from './lobby/lobby.jsx';
 import JoinLobby from "./join-lobby/JoinLobby.jsx";
 import CreateLobby from "./create-lobby/CreateLobby.jsx";
+import Game from "./game/game.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigate, useParams } from "react-router-dom";
 import ProtectedLobbyRoute from "./components/ProtectedLobbyRoute";
@@ -20,6 +21,14 @@ function App() {
                     element={
                         <ProtectedLobbyRoute>
                             <Lobby />
+                        </ProtectedLobbyRoute>
+                    }
+                />
+                <Route
+                    path="/lobby/:lobbyId/game"
+                    element={
+                        <ProtectedLobbyRoute>
+                            <Game />
                         </ProtectedLobbyRoute>
                     }
                 />

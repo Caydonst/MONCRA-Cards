@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import socket from "../socket.js";
 import "./Lobby.css"; // For circle styling
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Lobby() {
     const { lobbyId } = useParams();
@@ -9,6 +9,8 @@ export default function Lobby() {
     const [lobbyCode, setLobbyCode] = useState(null);
     const [lobbyOwner, setLobbyOwner] = useState(null);
     const [socketId, setSocketId] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setSocketId(socket.id);
@@ -44,6 +46,30 @@ export default function Lobby() {
         };
     }, [lobbyId]);
 
+    const startGame = () => {
+        socket.emit("start-game", lobbyId, (response) => {
+            if (response.success) {
+                navigate(`/lobby/${lobbyId}/game`);
+            } else {
+                alert(response.error);
+            }
+        });
+    }
+
+    useEffect(() => {
+        const handleGameStarted = (startedLobbyId) => {
+            if (startedLobbyId === lobbyId) {
+                navigate(`/lobby/${lobbyId}/game`);
+            }
+        };
+
+        socket.on("game-started", handleGameStarted);
+
+        return () => {
+            socket.off("game-started", handleGameStarted);
+        };
+    }, []);
+
     return (
         <div className="lobby-container">
             <div className="lobby-header">
@@ -63,7 +89,7 @@ export default function Lobby() {
                 )}
             </div>
             {socketId === lobbyOwner && (
-                <button className="start-game-btn">Start Game</button>
+                <button className={"start-game-btn"} onClick={startGame}>Start Game</button>
             )}
         </div>
     );

@@ -64,6 +64,7 @@ io.on("connection", (socket) => {
                 lobbyCode: code,
                 numPlayers: parseInt(numPlayers),
                 publicity: publicity,
+                open: true,
                 players: [socket.id]
             };
 
@@ -85,6 +86,21 @@ io.on("connection", (socket) => {
             callback({ success: true, lobby });
         } else {
             callback({ success: false, error: "Lobby not found" });
+        }
+    });
+
+    socket.on("start-game", (lobbyId, callback) => {
+        const lobby = lobbies[lobbyId];
+
+        if (lobby && lobby.players.length >= 2) {
+            // Notify everyone in the lobby
+            lobby.players.forEach((playerSocketId) => {
+                io.to(playerSocketId).emit("game-started", lobbyId);
+            });
+
+            callback({ success: true });
+        } else {
+            callback({ success: false, error: "Lobby must have 2 or more players" });
         }
     });
 
