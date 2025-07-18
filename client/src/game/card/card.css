@@ -1,0 +1,112 @@
+.card {
+    width: 240px;
+    height: 320px;
+    background: #A5003A;
+    border: 5px solid #FF0059;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px;
+    opacity: 0;
+    animation: floatUp 0.4s ease forwards;
+}
+.cost-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: #006091;
+    border-radius: 5px;
+    color: #fff;
+    border: 2px solid #00a6ff;
+    transform: rotate(45deg);
+}
+.cost-container p {
+    transform: rotate(-45deg);
+}
+.type-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    width: 100px;
+    height: 100%;
+}
+.type-container img {
+    width: 100px;
+    height: 100px;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.7));
+}
+.card-name-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background: #FF0059;
+    border-radius: 30px;
+}
+.card-name {
+    color: #fff;
+    font-size: 16px;
+}
+.card-description-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+}
+.card-description {
+    color: #fff;
+    text-align: center;
+}
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media (max-width: 500px) {
+    .card {
+        width: 180px;
+        height: 220px;
+        padding: 10px;
+        gap: 0;
+    }
+    .card-name {
+        font-size: 12px;
+    }
+    .cost-container {
+        width: 24px;
+        height: 24px;
+        top: 10px;
+        left: 10px;
+    }
+    .cost-container p {
+        font-size: 12px;
+    }
+    .type-container img {
+        width: 70px;
+        height: 70px;
+        image-rendering: pixelated;
+        filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.7));
+    }
+    .card-name-container {
+        padding: 5px;
+    }
+    .card-description {
+        font-size: 12px;
+    }
+}

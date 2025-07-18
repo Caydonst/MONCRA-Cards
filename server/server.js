@@ -92,15 +92,14 @@ io.on("connection", (socket) => {
     socket.on("start-game", (lobbyId, callback) => {
         const lobby = lobbies[lobbyId];
 
-        if (lobby && lobby.players.length >= 2) {
-            // Notify everyone in the lobby
+        if (lobby && lobby.players.length >= 1) {
             lobby.players.forEach((playerSocketId) => {
                 io.to(playerSocketId).emit("game-started", lobbyId);
             });
 
             callback({ success: true });
         } else {
-            callback({ success: false, error: "Lobby must have 2 or more players" });
+            callback({ success: false, error: "Lobby must have 1 or more players" });
         }
     });
 
