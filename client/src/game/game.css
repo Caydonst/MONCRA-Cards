@@ -97,9 +97,13 @@
 .hp p {
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 75%);
-    bottom: 100%;
+    transform: translate(-50%, -38%);
+    top: 0;
     color: #fff;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+    font-family: sans-serif;
+    font-weight: 900;
 }
 .game-page-container .cards-container {
     position: absolute;
@@ -119,7 +123,7 @@
     background: #000;
     border-top: 5px solid #242424;
     border-bottom: 5px solid #242424;
-    padding: 10px;
+    padding: 20px;
 }
 .cards-container-inner-inner {
     display: flex;

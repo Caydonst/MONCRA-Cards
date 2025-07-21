@@ -21,7 +21,11 @@ export function generateGame(players) {
     const game = {
         playerData: generatePlayerData(players),
         enemyData: generateEnemyData(),
-        turn: 0
+        turnData: {
+            turn: 1,
+            currentActionPoints: 4,
+            totalActionPoints: 4,
+        }
     };
 
     return game;

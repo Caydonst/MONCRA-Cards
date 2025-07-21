@@ -4,7 +4,7 @@ import armorImg from "../../assets/icons/armor.png";
 import hpImg from "../../assets/icons/hp.png";
 import { useState, useRef, useEffect } from "react";
 
-export default function Card({ type, cost, name, description, setCardDragging, dropCard }) {
+export default function Card({ type, cost, name, description, card, setCardDragging, dropCard, setCurrentCard }) {
     const [isDragging, setIsDragging] = useState(false);
     const [, forceRender] = useState(0); // Used to force re-renders
     const dragPos = useRef({ x: 0, y: 0 });
@@ -25,10 +25,11 @@ export default function Card({ type, cost, name, description, setCardDragging, d
 
     const handleMouseDown = (e) => {
         e.preventDefault();
-        const card = cardRef.current;
-        const rect = card.getBoundingClientRect();
+        const cardHTML = cardRef.current;
+        const rect = cardHTML.getBoundingClientRect();
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
+        setCurrentCard(card);
 
         originalPos.current = {
             left: rect.left + scrollX,
@@ -61,7 +62,8 @@ export default function Card({ type, cost, name, description, setCardDragging, d
 
     const handleMouseUp = (e) => {
         setIsDragging(false);
-        dropCard();
+        setCardDragging(false);
+        dropCard(card);
 
         window.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("mouseup", handleMouseUp);
@@ -92,7 +94,9 @@ export default function Card({ type, cost, name, description, setCardDragging, d
             onMouseDown={handleMouseDown}
         >
             <div className={"cost-container"}>
-                <p>{cost}</p>
+                <div className={"cost-container-inner"}>
+                    <p>{cost}</p>
+                </div>
             </div>
             <div className={"type-container"}>
                 <img src={getTypeImg(type)} />

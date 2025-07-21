@@ -16,11 +16,14 @@ export default function Game() {
     const [cardDragging, setCardDragging] = useState(false);
     const [hoverEntity, setHoverEntity] = useState(false);
     const dropTargetRef = useRef(null);
+    const [currentHp, setCurrentHp] = useState();
+    const [currentCard, setCurrentCard] = useState(null);
 
     const cards = [
         {
             type: "attack",
             name: "Stab",
+            damage: 6,
             cost: 1,
             description: "Deal 6 damage"
         },
@@ -61,8 +64,22 @@ export default function Game() {
         })
     }, [])
 
-    const handleMouseEnter = (e, entity) => {
-        dropTargetRef.current = e.currentTarget;
+    useEffect(() => {
+        const handleUpdatedGameData = (lobby, gameData) => {
+            if (lobby === lobbyId) {
+                setThisGameData(gameData);
+            }
+        };
+
+        socket.on("updated-game-data", handleUpdatedGameData);
+
+        return () => {
+            socket.off("updated-game-data", handleUpdatedGameData);
+        };
+    }, []);
+
+    const handleMouseEnter = (e, index, entity) => {
+        dropTargetRef.current = index;
         setHoverEntity(e.currentTarget);
         setIsHovered(true);
     }
@@ -82,20 +99,40 @@ export default function Game() {
         }
     }, [isHovered, hoverEntity, cardDragging]);
 
-    const dropCard = () => {
+    const dropCard = (card) => {
         const target = dropTargetRef.current;
-        if (target) {
+        if (target === 0) {
             console.log("Dropped on", target);
+            updateActionPoints(card, target);
             // Do something with the target
+            //console.log(currentCard);
+            //setCurrentCard(null);
         } else {
             console.log("Not dropped on a valid target");
+            //console.log(currentCard);
+            setCurrentCard(null);
             // Ignore the drop
         }
     };
 
+    const updateActionPoints = (card, target) => {
+        console.log(card);
+        socket.emit("update-action-points", lobbyId, card, target, (response) => {
+            if (response.success) {
+                setThisGameData(response.gameData);
+            } else {
+                console.log(response.error);
+            }
+        });
+    }
+
     useEffect(() => {
         console.log(isHovered);
     }, [isHovered]);
+
+    useEffect(() => {
+        console.log(currentCard);
+    }, [currentCard]);
 
     return (
         <div className={"game-page-container"}>
@@ -124,7 +161,7 @@ export default function Game() {
                     <div
                          key={index}
                          className={"enemy-container"}
-                         onMouseEnter={(e) => handleMouseEnter(e, enemy)}
+                         onMouseEnter={(e) => handleMouseEnter(e, index, enemy)}
                          onMouseLeave={(e) => handleMouseLeave(e, enemy)}
                     >
                         <div className={"hp-container"}>
@@ -142,7 +179,7 @@ export default function Game() {
                 <div className={"cards-container-inner"}>
                     <div className={"action-points-container"}>
                         <div className={"action-points"}>
-                            <p>4/4</p>
+                            <p>{thisGameData?.turnData?.currentActionPoints}/{thisGameData?.turnData?.totalActionPoints}</p>
                         </div>
                     </div>
                     <div className={"cards-container-inner-inner"}>
@@ -153,10 +190,12 @@ export default function Game() {
                                 cost={card.cost}
                                 name={card.name}
                                 description={card.description}
+                                card={card}
                                 style={{ animationDelay: `${i * 0.2}s`}}
                                 setCardDragging={setCardDragging}
                                 dropCard={dropCard}
                                 isHovered={isHovered}
+                                setCurrentCard={setCurrentCard}
                             />
                         ))}
                     </div>

@@ -118,7 +118,31 @@ io.on("connection", (socket) => {
         } else {
             callback({ success: false, error: "No game data found." });
         }
-    })
+    });
+
+    socket.on("update-action-points", (lobbyId, currentCard, target, callback) => {
+        try {
+            let gameData;
+            const lobby = lobbies[lobbyId];
+            console.log(lobby);
+            if (lobby.gameData) {
+                gameData = lobby.gameData;
+                console.log(gameData);
+            }
+            if (gameData) {
+                gameData.enemyData[target].currentHp -= currentCard.damage;
+                gameData.turnData.currentActionPoints -= currentCard.cost;
+                lobby.gameData = gameData;
+                callback({ success: true, gameData: gameData });
+                io.to(lobbyId).emit("updated-game-data", lobbyId, lobby.gameData)
+            } else {
+                callback({ success: false, error: "No game data found." });
+            }
+        } catch (err) {
+            console.error("update-action-points error:", err);
+            callback({ success: false, error: "Server error occurred." });
+        }
+    });
 
 
     socket.on("disconnect", () => {
