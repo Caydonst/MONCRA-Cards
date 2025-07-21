@@ -1,8 +1,8 @@
 .card {
     width: 240px;
     height: 320px;
-    background: #A5003A;
-    border: 5px solid #FF0059;
+    background: linear-gradient(to bottom, #242424, #404040);
+    border: 5px solid #808080;
     border-radius: 5px;
     position: relative;
     display: flex;
@@ -11,8 +11,16 @@
     flex-direction: column;
     gap: 10px;
     padding: 30px;
-    opacity: 0;
-    animation: floatUp 0.4s ease forwards;
+    opacity: 1;
+    /*animation: floatUp 0.4s ease forwards;*/
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    will-change: transform;
+    z-index: 100
+}
+.card:hover {
+    transform: translateY(-50px);
+    border-color: #fff;
+    box-shadow: 0 0 10px #fff;
 }
 .cost-container {
     position: absolute;
@@ -26,7 +34,7 @@
     background: #006091;
     border-radius: 5px;
     color: #fff;
-    border: 2px solid #00a6ff;
+    border: 5px solid #00a6ff;
     transform: rotate(45deg);
 }
 .cost-container p {
@@ -43,7 +51,7 @@
     width: 100px;
     height: 100px;
     image-rendering: pixelated;
-    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
 }
 .card-name-container {
     position: absolute;
@@ -51,12 +59,13 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 10px;
-    background: #FF0059;
+    background: #404040;
     border-radius: 30px;
 }
 .card-name {
     color: #fff;
     font-size: 16px;
+    line-height: 1;
 }
 .card-description-container {
     display: flex;

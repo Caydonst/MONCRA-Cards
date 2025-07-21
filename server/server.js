@@ -2,6 +2,7 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const {generateGame} = require("./createGame");
 
 const app = express();
 const server = http.createServer(app);
@@ -97,11 +98,27 @@ io.on("connection", (socket) => {
                 io.to(playerSocketId).emit("game-started", lobbyId);
             });
 
-            callback({ success: true });
+            const game = generateGame(lobby.players);
+            lobbies[lobbyId].gameData = game;
+            callback({ success: true, gameData: game });
         } else {
             callback({ success: false, error: "Lobby must have 1 or more players" });
         }
     });
+
+    socket.on("get-game-data", (lobbyId, callback) => {
+        let gameData;
+        console.log(lobbies[lobbyId]);
+        if (lobbies[lobbyId].gameData) {
+            gameData = lobbies[lobbyId].gameData;
+            console.log(gameData);
+        }
+        if (gameData) {
+            callback({ success: true, gameData: gameData });
+        } else {
+            callback({ success: false, error: "No game data found." });
+        }
+    })
 
 
     socket.on("disconnect", () => {
