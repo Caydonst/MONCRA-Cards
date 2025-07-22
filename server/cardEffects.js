@@ -5,6 +5,9 @@ export const effectHandlers = {
     applyDebuff: (player, enemy, { debuff, duration }) => {
         //enemy.debuffs = enemy.debuffs || [];
         enemy.debuffs.push({ type: debuff, duration });
+    },
+    applyBuff: (player, {buff, duration}) => {
+        player.buffs.push({ type: buff, duration });
     }
 }
 

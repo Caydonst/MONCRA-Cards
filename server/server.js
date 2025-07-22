@@ -144,6 +144,10 @@ io.on("connection", (socket) => {
         }
     });
 
+    socket.on("play-card", (lobbyId, card, target, callback) => {
+
+    })
+
 
     socket.on("disconnect", () => {
         for (const lobbyId in lobbies) {
@@ -168,4 +172,4 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(3001, () => console.log("Server running on port 3001"));
+server.listen(3001, '0.0.0.0', () => console.log("Server running on port 3001"));

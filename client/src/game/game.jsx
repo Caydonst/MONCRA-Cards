@@ -194,13 +194,12 @@ export default function Game() {
                                 style={{ animationDelay: `${i * 0.2}s`}}
                                 setCardDragging={setCardDragging}
                                 dropCard={dropCard}
-                                isHovered={isHovered}
                                 setCurrentCard={setCurrentCard}
                             />
                         ))}
                     </div>
                     <div className={"end-turn-container"}>
-                        <button>Inflict Damage</button>
+                        <button>End Turn</button>
                     </div>
                 </div>
             </div>

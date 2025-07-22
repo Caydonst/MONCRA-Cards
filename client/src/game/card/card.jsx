@@ -98,11 +98,11 @@ export default function Card({ type, cost, name, description, card, setCardDragg
                     <p>{cost}</p>
                 </div>
             </div>
-            <div className={"type-container"}>
-                <img src={getTypeImg(type)} />
-            </div>
             <div className={"card-name-container"}>
                 <h1 className={"card-name"}>{name}</h1>
+            </div>
+            <div className={"card-img-container"}>
+                <img src={getTypeImg(type)} />
             </div>
             <div className={"card-description-container"}>
                 <p className={"card-description"}>{description}</p>
