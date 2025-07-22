@@ -137,43 +137,35 @@ export default function Game() {
     return (
         <div className={"game-page-container"}>
             <div className={"stage-container"}></div>
-            <div className={"characters-container"}>
-                {thisGameData?.playerData?.map((player, index) => (
-                    <div
-                        key={index}
-                        className={"character-container"}
-                        onMouseEnter={(e) => handleMouseEnter(e, player)}
-                        onMouseLeave={(e) => handleMouseLeave(e, player)}
-                    >
+            <div className={"entities-container"}>
+                <div className={"players-container"}>
+                    {thisGameData?.playerData?.map((player, index) => (
                         <div className={"hp-container"}>
                             <div className={"hp"}>
                                 <p>{player.currentHp}/{player.maxHp}</p>
                             </div>
                         </div>
-                        <div className={"character"}>
-                            <img className={"character-spritesheet"} src={characterSpritesheet} />
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className={"enemies-container"}>
-                {thisGameData?.enemyData?.map((enemy, index) => (
-                    <div
-                         key={index}
-                         className={"enemy-container"}
-                         onMouseEnter={(e) => handleMouseEnter(e, index, enemy)}
-                         onMouseLeave={(e) => handleMouseLeave(e, enemy)}
-                    >
-                        <div className={"hp-container"}>
-                            <div className={"hp"}>
-                                <p>{enemy.currentHp}/{enemy.maxHp}</p>
+                    ))}
+                </div>
+                <div className={"enemies-container"}>
+                    {thisGameData?.enemyData?.map((enemy, index) => (
+                        <div
+                            key={index}
+                             className={"enemy-container"}
+                             onMouseEnter={(e) => handleMouseEnter(e, index, enemy)}
+                             onMouseLeave={(e) => handleMouseLeave(e, enemy)}
+                        >
+                            <div className={"hp-container"}>
+                                <div className={"hp"}>
+                                    <p>{enemy.currentHp}/{enemy.maxHp}</p>
+                                </div>
+                            </div>
+                            <div className={"enemy"}>
+                                <img className={"enemy-spritesheet"} src={enemySpritesheet} />
                             </div>
                         </div>
-                        <div className={"enemy"}>
-                            <img className={"enemy-spritesheet"} src={enemySpritesheet} />
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
             <div className={"cards-container"}>
                 <div className={"cards-container-inner"}>

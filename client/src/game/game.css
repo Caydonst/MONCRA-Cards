@@ -13,42 +13,22 @@
     top: 50%;
     border-top: 5px solid gray;
 }
-.characters-container {
+.entities-container {
     position: absolute;
-    bottom: 50%;
-    left: 10%;
+    top: 0;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+.players-container {
     display: flex;
     justify-content: center;
     align-items: end;
     gap: 20px;
 }
-.character-container {
-    position: relative;
-    image-rendering: pixelated;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-}
-.character {
-    position: relative;
-    width: calc(16px * var(--pixel-size-character));
-    height: calc(22px * var(--pixel-size-character));
-    image-rendering: pixelated;
-    overflow: hidden;
-}
-.character-spritesheet {
-    position: absolute;
-    bottom: 0;
-    animation: moveSpritesheet 0.8s steps(4) infinite;
-    width: calc(64px * var(--pixel-size-character));
-}
 .enemies-container {
-    position: absolute;
-    bottom: 50%;
-    right: 10%;
     display: flex;
     justify-content: center;
     align-items: end;
@@ -208,7 +188,11 @@
     .stage-container {
         top: 40%;
     }
-    .characters-container {
+    .entities-container {
+        flex-direction: column;
+        height: 40vh;
+    }
+    .players-container {
         bottom: 60%;
     }
     .enemies-container {

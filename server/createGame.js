@@ -51,10 +51,11 @@ function generatePlayerData(players) {
 
 function generateEnemyData() {
 
-    const randomNumber = Math.floor(Math.random() * 3) + 1;
+    //const randomNumber = Math.floor(Math.random() * 1) + 1;
+    const number = 1;
     let enemyData = [];
 
-    for (let i = 0; i < randomNumber; i++) {
+    for (let i = 0; i < number; i++) {
         const randomHp = Math.floor(Math.random() * 50) + 50;
         const data = {
             maxHp: randomHp,
