@@ -18,6 +18,9 @@ export default function Game() {
     const dropTargetRef = useRef(null);
     const [currentHp, setCurrentHp] = useState();
     const [currentCard, setCurrentCard] = useState(null);
+    const sphereRef = useRef(null);
+    const shadowRef = useRef(null);
+    const hpBarRef = useRef(null);
 
     const cards = [
         {
@@ -78,94 +81,74 @@ export default function Game() {
         };
     }, []);
 
-    const handleMouseEnter = (e, index, entity) => {
-        dropTargetRef.current = index;
-        setHoverEntity(e.currentTarget);
-        setIsHovered(true);
-    }
-
-    const handleMouseLeave = (e, entity) => {
-        setIsHovered(false);
-        dropTargetRef.current = null;
-    };
-
-    useEffect(() => {
-        if (hoverEntity) {
-            if (isHovered && cardDragging) {
-                hoverEntity.style.border = "1px solid white";
-            } else {
-                hoverEntity.style.border = "none";
-            }
-        }
-    }, [isHovered, hoverEntity, cardDragging]);
-
-    const dropCard = (card) => {
-        const target = dropTargetRef.current;
-        if (target === 0) {
-            console.log("Dropped on", target);
-            updateActionPoints(card, target);
-            // Do something with the target
-            //console.log(currentCard);
-            //setCurrentCard(null);
-        } else {
-            console.log("Not dropped on a valid target");
-            //console.log(currentCard);
-            setCurrentCard(null);
-            // Ignore the drop
-        }
-    };
-
-    const updateActionPoints = (card, target) => {
+    const updateActionPoints = (card) => {
         console.log(card);
-        socket.emit("update-action-points", lobbyId, card, target, (response) => {
+        console.log(thisGameData?.enemyData[0]);
+
+        // Add shake class to sphere
+        const sphere = sphereRef.current;
+        const shadow = shadowRef.current
+        if (sphere) {
+            sphere.classList.add("shake");
+            shadow.classList.add("shadowShake");
+
+            // Remove it after animation ends so it can be reused
+            const handleAnimationEnd = () => {
+                sphere.classList.remove("shake");
+                sphere.removeEventListener("animationend", handleAnimationEnd);
+                shadow.classList.remove("shadowShake");
+                shadow.removeEventListener("animationend", handleAnimationEnd);
+            };
+
+            sphere.addEventListener("animationend", handleAnimationEnd);
+            shadow.addEventListener("animationend", handleAnimationEnd);
+        }
+
+        socket.emit("update-action-points", lobbyId, card, 0, (response) => {
             if (response.success) {
                 setThisGameData(response.gameData);
             } else {
                 console.log(response.error);
             }
         });
-    }
+    };
 
     useEffect(() => {
-        console.log(isHovered);
-    }, [isHovered]);
-
-    useEffect(() => {
-        console.log(currentCard);
-    }, [currentCard]);
+        if (hpBarRef.current && thisGameData?.enemyData) {
+            const hp = (thisGameData.enemyData[0].currentHp / thisGameData.enemyData[0].maxHp) * 100;
+            if (thisGameData.enemyData[0].currentHp <= 0) {
+                hpBarRef.current.style.width = `${0}%`;
+            }
+            hpBarRef.current.style.width = `${hp}%`;
+        }
+    }, [thisGameData]);
 
     return (
         <div className={"game-page-container"}>
-            <div className={"stage-container"}></div>
-            <div className={"entities-container"}>
-                <div className={"players-container"}>
-                    {thisGameData?.playerData?.map((player, index) => (
-                        <div className={"hp-container"}>
-                            <div className={"hp"}>
-                                <p>{player.currentHp}/{player.maxHp}</p>
+            <div className={"players-container"}>
+                {thisGameData?.playerData?.map((player, index) => (
+                    <div className={"player-hp-container"}>
+                        <div className={"player-hp"}>
+                            <p>{player.currentHp}/{player.maxHp}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className={"enemies-container"}>
+                {thisGameData?.enemyData?.map((enemy, index) => (
+                    <div
+                        key={index}
+                        className={"enemy-container"}
+                    >
+                        <div className={"enemy-hp-container"}>
+                            <div ref={hpBarRef} id={"enemy-hp"} className={"enemy-hp"}>
+                                <p>{enemy.currentHp}/{enemy.maxHp}</p>
                             </div>
                         </div>
-                    ))}
-                </div>
-                <div className={"enemies-container"}>
-                    {thisGameData?.enemyData?.map((enemy, index) => (
-                        <div
-                            key={index}
-                             className={"enemy-container"}
-                             onMouseEnter={(e) => handleMouseEnter(e, index, enemy)}
-                             onMouseLeave={(e) => handleMouseLeave(e, enemy)}
-                        >
-                            <div className={"hp-container"}>
-                                <div className={"hp"}>
-                                    <p>{enemy.currentHp}/{enemy.maxHp}</p>
-                                </div>
-                            </div>
-                            <div className={"enemy"}>
-                                <img className={"enemy-spritesheet"} src={enemySpritesheet} />
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        <div ref={sphereRef} className={"enemy"}></div>
+                        <div ref={shadowRef} className={"shadow"}></div>
+                    </div>
+                ))}
             </div>
             <div className={"cards-container"}>
                 <div className={"cards-container-inner"}>
@@ -185,8 +168,8 @@ export default function Game() {
                                 card={card}
                                 style={{ animationDelay: `${i * 0.2}s`}}
                                 setCardDragging={setCardDragging}
-                                dropCard={dropCard}
                                 setCurrentCard={setCurrentCard}
+                                updateActionPoints={updateActionPoints}
                             />
                         ))}
                     </div>

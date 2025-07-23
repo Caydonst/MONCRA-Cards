@@ -4,23 +4,9 @@
     overflow: hidden;
     position: relative;
     background: #323232;
-}
-.stage-container {
-    width: 100%;
-    height: 600px;
-    background: #606060;
-    position: absolute;
-    top: 50%;
-    border-top: 5px solid gray;
-}
-.entities-container {
-    position: absolute;
-    top: 0;
-    height: 50vh;
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: end;
+    justify-content: center;
+    align-items: center;
 }
 .players-container {
     display: flex;
@@ -28,11 +14,44 @@
     align-items: end;
     gap: 20px;
 }
+.player-hp-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    height: 30px;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #fff;
+}
+.player-hp {
+    width: 100%;
+    height: 100%;
+    background: green;
+    border-radius: 20px;
+}
+.player-hp p {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    top: 50%;
+    color: #fff;
+    font-size: 20px;
+    -webkit-text-stroke: 1px black;
+    font-family: sans-serif;
+    font-weight: 900;
+    line-height: 1;
+}
 .enemies-container {
     display: flex;
     justify-content: center;
     align-items: end;
     gap: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .enemy-container {
     position: relative;
@@ -46,31 +65,42 @@
 }
 .enemy {
     position: relative;
-    width: calc(16px * var(--pixel-size-enemy));
-    height: calc(16px * var(--pixel-size-enemy));
-    image-rendering: pixelated;
-    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at 30% 30%, #161616, #000);
+    border-radius: 50%;
+    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.4),
+    inset 10px 10px 20px rgba(255, 255, 255, 0.2),
+    0 10px 15px rgba(0, 0, 0, 0.3);
+    animation: float 1.5s ease-in-out infinite;
 }
-.enemy-spritesheet {
+.shadow {
     position: absolute;
-    bottom: 0;
-    animation: moveSpritesheet 1s steps(4) infinite;
-    width: calc(64px * var(--pixel-size-enemy));
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 30px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 1), transparent 70%);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: shadowPulse 1.5s ease-in-out infinite;
 }
-.hp-container {
+.enemy-hp-container {
     width: 150px;
     height: 8px;
     background: #000;
     border-radius: 10px;
     overflow: hidden;
+    border: 1px solid #fff;
 }
-.hp {
+.enemy-hp {
     width: 100%;
     height: 100%;
     background: red;
     border-radius: 10px;
 }
-.hp p {
+.enemy-hp p {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -38%);
@@ -89,7 +119,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    height: 40vh;
+    height: 30vh;
 }
 .cards-container-inner {
     display: flex;
@@ -98,10 +128,7 @@
     gap: 10px;
     width: 100%;
     height: 100%;
-    background: #000;
-    border-top: 5px solid #242424;
-    border-bottom: 5px solid #242424;
-    padding: 40px 0;
+    padding: 30px 0 20px 0;
     overflow: auto;
 }
 .cards-container-inner-inner {
@@ -109,7 +136,6 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
     height: 100%;
 }
 .action-points-container {
@@ -152,17 +178,47 @@
     box-shadow: 0 0 20px #00a6ff;
     border-color: #4FC4FF;
 }
-:root {
-    --pixel-size-enemy: 6;
-    --pixel-size-character: 6;
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0)
+    }
+    50% {
+        transform: translateY(10px);
+    }
 }
-@keyframes moveSpritesheet {
-    from {
-        transform: translate3d(0px, 0, 0)
+@keyframes shadowPulse {
+    0%, 100% {
+        transform: translateX(-50%) scale(0.9);
+        opacity: 0.8;
     }
-    to {
-        transform: translate3d(-100%, 0, 0)
+    50% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
     }
+}
+@keyframes shadowShake {
+    0%, 100% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(0.9);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(0.9);
+    }
+}
+@keyframes shake {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-5px, 0); }
+    50%  { transform: translate(5px, 0); }
+    75%  { transform: translate(-5px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+.shake {
+    animation: shake 0.2s ease;
+}
+.shadowShake {
+    animation: shadowShake 0.2s ease;
 }
 @media (max-width: 1200px) {
     .characters-container {
@@ -172,44 +228,20 @@
         right: 10%;
     }
 }
-@media (max-width: 800px) {
-    :root {
-        --pixel-size-enemy: 3;
-        --pixel-size-character: 3;
-    }
-    .hp-container {
-        width: 80px;
-    }
-    .hp p {
-        font-size: 16px;
-    }
-}
 @media (max-width: 500px) {
     .stage-container {
         top: 40%;
-    }
-    .entities-container {
-        flex-direction: column;
-        height: 40vh;
     }
     .players-container {
         bottom: 60%;
     }
     .enemies-container {
-        bottom: 60%;
+        bottom: 40%;
     }
     .game-page-container .cards-container {
-        height: 50vh;
+        height: 40vh;
     }
     .cards-container-inner {
-        flex-direction: column;
         justify-content: center;
-    }
-    .hp-container {
-        width: 50px;
-    }
-    .hp p {
-        font-size: 12px;
-        -webkit-text-stroke: 0px white;
     }
 }
