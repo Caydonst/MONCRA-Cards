@@ -128,8 +128,11 @@ export default function Game() {
             <div className={"players-container"}>
                 {thisGameData?.playerData?.map((player, index) => (
                     <div className={"player-hp-container"}>
-                        <div className={"player-hp"}>
-                            <p>{player.currentHp}/{player.maxHp}</p>
+                        <div className={"player-hp-background"}>
+                            <div className={"player-hp"}>
+                                <p>{player.currentHp}/{player.maxHp}</p>
+                                <div className={"player-hp-light"}></div>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -141,8 +144,11 @@ export default function Game() {
                         className={"enemy-container"}
                     >
                         <div className={"enemy-hp-container"}>
-                            <div ref={hpBarRef} id={"enemy-hp"} className={"enemy-hp"}>
-                                <p>{enemy.currentHp}/{enemy.maxHp}</p>
+                            <div className={"enemy-hp-background"}>
+                                <div ref={hpBarRef} className={"enemy-hp"}>
+                                    <p>{enemy.currentHp}/{enemy.maxHp}</p>
+                                    <div className={"enemy-hp-light"}></div>
+                                </div>
                             </div>
                         </div>
                         <div ref={sphereRef} className={"enemy"}></div>
@@ -151,13 +157,9 @@ export default function Game() {
                 ))}
             </div>
             <div className={"cards-container"}>
-                <div className={"cards-container-inner"}>
-                    <div className={"action-points-container"}>
-                        <div className={"action-points"}>
-                            <p>{thisGameData?.turnData?.currentActionPoints}/{thisGameData?.turnData?.totalActionPoints}</p>
-                        </div>
-                    </div>
-                    <div className={"cards-container-inner-inner"}>
+
+                <div className={"card-carousel-wrapper"}>
+                    <div className={"cards-carousel"}>
                         {cards.map((card, i) => (
                             <Card
                                 key={i}
@@ -166,17 +168,15 @@ export default function Game() {
                                 name={card.name}
                                 description={card.description}
                                 card={card}
-                                style={{ animationDelay: `${i * 0.2}s`}}
+                                style={{animationDelay: `${i * 0.2}s`}}
                                 setCardDragging={setCardDragging}
                                 setCurrentCard={setCurrentCard}
                                 updateActionPoints={updateActionPoints}
                             />
                         ))}
                     </div>
-                    <div className={"end-turn-container"}>
-                        <button>End Turn</button>
-                    </div>
                 </div>
+
             </div>
         </div>
     );

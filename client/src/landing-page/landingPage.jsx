@@ -8,9 +8,28 @@ export default function LandingPage() {
             <div className={"menu"}>
                 <h1>MONCRA</h1>
                 <div className={"options"}>
-                    <Link to={"/join"}><button className={"join-btn"}>Join Lobby</button></Link>
-                    <Link to={"/create"}><button className={"create-btn"}>Create Lobby</button></Link>
-                    <button className={"cards-btn"}>Cards</button>
+                    <Link to={"/join"}>
+                        <div className={"button-wrapper"}>
+                            <div className={"button"}>
+                                <p>Join Lobby</p>
+                                <div className={"button-light"}></div>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to={"/create"}>
+                        <div className={"button-wrapper"}>
+                            <div className={"button"}>
+                                <p>Create Lobby</p>
+                                <div className={"button-light"}></div>
+                            </div>
+                        </div>
+                    </Link>
+                    <div className={"button-wrapper"}>
+                        <div className={"button"}>
+                            <p>Cards</p>
+                            <div className={"button-light"}></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

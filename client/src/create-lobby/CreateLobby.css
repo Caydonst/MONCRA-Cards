@@ -7,10 +7,12 @@
     align-items: center;
     flex-direction: column;
     gap: 30px;
+    padding: 20px;
 }
 .create-lobby h1 {
     font-size: 50px;
     color: #fff;
+    text-align: center;
 }
 .lobby-info {
     display: flex;
@@ -18,10 +20,12 @@
     align-items: center;
     flex-direction: column;
     gap: 30px;
+    max-width: 600px;
+    width: 100%;
 }
 .lobby-info .player-select,
 .lobby-info .publicity-select {
-    width: 600px;
+    width: 100%;
     background: transparent;
     border: 2px solid #424242;
     border-radius: 5px;
@@ -125,7 +129,8 @@
     color: #fff;
 }
 .create-lobby-btn {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     height: 60px;
     color: #fff;
     border: none;

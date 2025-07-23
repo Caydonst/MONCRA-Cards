@@ -96,7 +96,9 @@ export default function CreateLobby() {
             <h1>Create Lobby</h1>
             <div className={"lobby-info"}>
                 <div className={"player-select"}>
-                    <div className={"player-select-header"} onClick={togglePlayerDropdown}>{numPlayers} Players <ChevronDownIcon className={"down-arrow"}/></div>
+                    <div className={"player-select-header"}
+                         onClick={togglePlayerDropdown}>{numPlayers} Players <ChevronDownIcon className={"down-arrow"}/>
+                    </div>
                     <div ref={playerRef} className={`player-selector-dropdown ${playerOpen ? "open" : ""}`}>
                         <button onClick={() => setPlayers(2)}>2 Players</button>
                         <button onClick={() => setPlayers(3)}>3 Players</button>
@@ -104,15 +106,23 @@ export default function CreateLobby() {
                     </div>
                 </div>
                 <div className={"publicity-select"}>
-                    <div className={"publicity-select-header"}  onClick={togglePublicityDropdown}>{publicity} <ChevronDownIcon className={"down-arrow"}/></div>
+                    <div className={"publicity-select-header"} onClick={togglePublicityDropdown}>{publicity}
+                        <ChevronDownIcon className={"down-arrow"}/></div>
                     <div ref={publicityRef} className={`publicity-selector-dropdown ${publicityOpen ? "open" : ""}`}>
                         <button onClick={() => setPublicityFunc("Public")}>Public</button>
                         <button onClick={() => setPublicityFunc("Private")}>Private</button>
                     </div>
                 </div>
-                <button className={"create-lobby-btn"} onClick={createNewLobby}>Create Lobby</button>
+                <div className={"button-wrapper"} onClick={createNewLobby}>
+                    <div className={"button"}>
+                        <p>Create Lobby</p>
+                        <div className={"button-light"}></div>
+                    </div>
+                </div>
             </div>
-            <Link to={"/"}><button className={"back-btn"}><ArrowLeftIcon className={"arrow-left"}/></button></Link>
+            <Link to={"/"}>
+                <button className={"back-btn"}><ArrowLeftIcon className={"arrow-left"}/></button>
+            </Link>
         </div>
     )
 }

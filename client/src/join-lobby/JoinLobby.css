@@ -7,14 +7,17 @@
     align-items: center;
     flex-direction: column;
     gap: 30px;
+    padding: 20px;
 }
 .join-lobby h1 {
     font-family: "Monstserrat", sans-serif;
     font-size: 50px;
     color: #fff;
+    text-align: center;
 }
 .join-lobby input {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     height: 60px;
     background: #141414;
     outline: none;
@@ -32,7 +35,8 @@
     border-color: #fff;
 }
 .join-lobby .join-btn {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     height: 60px;
     color: #fff;
     border: none;

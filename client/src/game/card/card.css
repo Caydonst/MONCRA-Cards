@@ -1,88 +1,54 @@
 .card {
     aspect-ratio: 1 / 1.25;
-    height: 100%;
-    min-width: 160px;
-    min-height: 200px;
-    max-width: 220px;
-    max-height: 280px;
-    background: linear-gradient(to bottom, #1c3587, #3867ff);
-    border: 5px solid #547cff;
-    border-radius: 5px;
+    height: 90%;
+    background: rgb(50, 50, 255);
+    border: 3px solid #000;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    opacity: 1;
-    /*animation: floatUp 0.4s ease forwards;*/
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    will-change: transform;
-    z-index: 100;
-    font-size: 0.8vh;
     cursor: pointer;
+    transition: 0.2s;
 }
 .card:hover {
-    transform: translateY(-10px);
-    border-color: #fff;
-}
-.card:hover .cost-container {
-    border-color: #fff;
     background: #fff;
+    transform: translateY(-10px);
 }
-.cost-container {
+.card-light {
+    width: 100%;
+    height: 55%;
+    background: rgba(255, 255, 255, 0.2);
+}
+.card-inner {
     position: absolute;
-    top: -2.5px;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
+    border: 3px solid #000;
+    background: rgb(100, 100, 255);
+    top: 4px;
+    right: 4px;
+    left: 4px;
+    bottom: 4px;
+}
+.title-container {
+    position: absolute;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 14%;
-    aspect-ratio: 1 / 1;
-    background: #808080;
-    border-radius: 3px;
     color: #fff;
-    border: 4px solid #547cff;
-    z-index: 2;
-    transition: 0.3s;
+    font-weight: 700;
+    top: 10%;
+    font-size: 12px;
 }
-.cost-container-inner {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid #00a6ff;
-    background: #006091;
-    border-radius: 3px;
-}
-.cost-container p {
-    transform: rotate(-45deg);
-    font-size: 1.6em;
-}
-.card-info-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.card-img-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 44%;
-    aspect-ratio: 1 / 1;
+.img-container {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    height: 40%;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.card-img-container img {
-    width: 100%;
+.img-container img {
+    width: 90%;
     image-rendering: pixelated;
     filter:
             drop-shadow(-1px 0 0 white)
@@ -90,50 +56,66 @@
             drop-shadow(0 -1px 0 white)
             drop-shadow(0 1px 0 white);
 }
-.card-name-container {
-    position: absolute;
-    top: 12%;
-    left: 50%;
+.card-inner-light {
     width: 100%;
-    transform: translateX(-50%);
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
+    height: 60%;
+    background: rgba(255, 255, 255, 0.2);
+}
+.cost-container {
+    position: absolute;
+    width: 15%;
+    height: 12%;
+    background: #fff;
+    border: 3px solid #000;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: 100;
+}
+.cost-inner {
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 100, 189);
+    border: 3px solid rgb(0, 153, 255);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.card-name {
-    color: #fff;
-    font-size: 1.6em;
+.cost-inner p {
     line-height: 1;
+    color: #fff;
+    transform: rotate(-45deg);
+    font-size: 16px;
 }
 .card-description-container {
+    width: 100%;
+    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 35%;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
+    padding: 5px;
 }
 .card-description {
     color: #fff;
+    line-height: 1;
+    font-size: 12px;
     text-align: center;
-    font-size: 1.6em;
 }
-@keyframes floatUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
+@media (max-width: 500px) {
+    .const-inner p {
+        font-size: 12px;
     }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
+    .title-container {
+        font-size: 12px;
     }
-}
-@media (max-width: 830px) {
-    .card {
-        height: 200px;
+    .card-description {
+        font-size: 12px;
+    }
+    .cost-container {
+        top: -10px;
+    }
+    .card:hover {
+        background: rgb(50, 50, 255);
+        transform: translateY(0px);
     }
 }

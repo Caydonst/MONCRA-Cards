@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 .menu {
     display: flex;
@@ -15,19 +16,23 @@
     align-items: center;
     flex-direction: column;
     gap: 50px;
+    max-width: 600px;
+    width: 100%;
 }
 .menu .options {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
+    max-width: 600px;
+    width: 100%;
 }
 .menu h1 {
     color: #47bfff;
     font-weight: 100;
-    font-size: 80px;
     font-family: "Pixel", sans-serif;
+    font-size: clamp(30px, 8vw, 80px);
 }
 .menu .options .join-btn,
 .menu .options .create-btn,
@@ -35,7 +40,7 @@
     border: none;
     background: #00a6ff;
     color: #fff;
-    width: 300px;
+    width: 100%;
     height: 50px;
     border-radius: 5px;
     cursor: pointer;
@@ -46,4 +51,44 @@
 .menu .options .create-btn:hover,
 .menu .options .cards-btn:hover {
     background: #0088d1;
+}
+.options a {
+    display: block;
+    width: 100%;
+}
+.button-wrapper {
+    width: 100%;
+    max-width: 600px;
+    height: 70px;
+    background: #fff;
+    padding: 4px;
+    border: 4px solid #000;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.button {
+    background: rgb(50, 50, 255);
+    border: 5px solid #000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    position: relative;
+}
+.button p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: #fff;
+}
+.button-light {
+    width: 100%;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.3);
+}
+.button-wrapper:hover {
+    background: gold;
 }
