@@ -131,7 +131,6 @@ export default function Game() {
                         <div className={"player-hp-background"}>
                             <div className={"player-hp"}>
                                 <p>{player.currentHp}/{player.maxHp}</p>
-                                <div className={"player-hp-light"}></div>
                             </div>
                         </div>
                     </div>
@@ -147,7 +146,6 @@ export default function Game() {
                             <div className={"enemy-hp-background"}>
                                 <div ref={hpBarRef} className={"enemy-hp"}>
                                     <p>{enemy.currentHp}/{enemy.maxHp}</p>
-                                    <div className={"enemy-hp-light"}></div>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +155,11 @@ export default function Game() {
                 ))}
             </div>
             <div className={"cards-container"}>
-
+                <div className={"action-points-container"}>
+                    <div className={"action-points"}>
+                        <p>{thisGameData?.turnData?.currentActionPoints}/{thisGameData?.turnData?.totalActionPoints}</p>
+                    </div>
+                </div>
                 <div className={"card-carousel-wrapper"}>
                     <div className={"cards-carousel"}>
                         {cards.map((card, i) => (
@@ -176,7 +178,9 @@ export default function Game() {
                         ))}
                     </div>
                 </div>
-
+                <div className={"end-turn-container"}>
+                    <button className={"end-turn-btn"}><p>End Turn</p></button>
+                </div>
             </div>
         </div>
     );

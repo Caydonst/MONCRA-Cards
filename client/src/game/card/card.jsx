@@ -23,24 +23,19 @@ export default function Card({ type, cost, name, description, card, setCardDragg
              className="card"
              onClick={() => updateActionPoints(card)}
         >
-            <div className="card-light"></div>
             <div className="cost-container">
                 <div className="cost-inner">
                     <p>{cost}</p>
                 </div>
             </div>
-            <div className="card-inner">
-                <div className="title-container">
-                    <p>{name}</p>
-                </div>
-                <div className="img-container">
-                    <div className={"img-container-light"}></div>
-                    <img src={getTypeImg(type)}/>
-                </div>
-                <div className="card-inner-light"></div>
-                <div className={"card-description-container"}>
-                    <p className={"card-description"}>{description}</p>
-                </div>
+            <div className="title-container">
+                <p>{name}</p>
+            </div>
+            <div className="img-container">
+                <img src={getTypeImg(type)}/>
+            </div>
+            <div className={"card-description-container"}>
+                <p className={"card-description"}>{description}</p>
             </div>
         </div>
     );
